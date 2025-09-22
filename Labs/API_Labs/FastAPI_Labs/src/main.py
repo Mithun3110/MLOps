@@ -2,7 +2,6 @@ from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
 from predict import predict_data
 
-
 app = FastAPI()
 
 class IrisData(BaseModel):
@@ -12,7 +11,9 @@ class IrisData(BaseModel):
     sepal_width: float
 
 class IrisResponse(BaseModel):
-    response:int
+    response: str   
+
+iris_classes = {0: "setosa", 1: "versicolor", 2: "virginica"}
 
 @app.get("/", status_code=status.HTTP_200_OK)
 async def health_ping():
@@ -22,14 +23,11 @@ async def health_ping():
 async def predict_iris(iris_features: IrisData):
     try:
         features = [[iris_features.sepal_length, iris_features.sepal_width,
-                    iris_features.petal_length, iris_features.petal_width]]
+                     iris_features.petal_length, iris_features.petal_width]]
 
         prediction = predict_data(features)
-        return IrisResponse(response=int(prediction[0]))
-    
+        predicted_class = iris_classes[int(prediction[0])] 
+        return IrisResponse(response=predicted_class)
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-
-
-    
