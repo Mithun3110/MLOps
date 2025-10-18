@@ -60,6 +60,8 @@ def build_save_model(data, filename):
         sse.append(kmeans.inertia_)
     
     output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model")
+    pickle.dump(kmeans, open(os.path.join(os.path.dirname(__file__), '..', '..', 'working_data', filename), 'wb'))
+
     # Create the model directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
