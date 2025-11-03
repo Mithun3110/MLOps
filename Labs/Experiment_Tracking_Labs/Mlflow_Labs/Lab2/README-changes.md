@@ -1,8 +1,8 @@
-- Run python train_and_log.py to train Linear Regression on Diabetes and log to local MLflow (./mlruns), note the printed run_id.
+- Added RandomForestRegressor alongside Linear Regression, logging model_type, n_estimators, max_depth; Random Forest achieved higher R² (0.505 vs 0.108).
 
-- View runs: mlflow ui --backend-store-uri ./mlruns --port 5002 → open http://127.0.0.1:5002 and select LinearRegression-Diabetes-Local.
+- Added analyze_predictions() to report ranges, mean error, and std; logged pred_mean, pred_std, residual_std to MLflow (6 metrics total).
 
-- (Optional) Serve & test: mlflow models serve -m runs:/<RUN_ID>/model -p 5000 --env-manager local, then POST to http://127.0.0.1:5000/invocations.
+- Added print_dataset_info() to display train/test sizes, feature count, and target range.
 
 # MLFlow Screenshot
 
